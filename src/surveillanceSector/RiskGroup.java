@@ -2,20 +2,26 @@ package surveillanceSector;
 
 
 public enum RiskGroup {
-    NONE(2),
-    MINOR(4),
-    NORMAL(7),
-    MAJOR(13),
-    CRITICAL(Integer.MAX_VALUE);
+    NONE(1, 2),
+    MINOR(3, 4),
+    NORMAL(5, 7),
+    MAJOR(8, 13),
+    CRITICAL(14, Integer.MAX_VALUE);
 
     private final int maxCount;
+    private final int minCount;
 
-    private RiskGroup(int maxCount) {
+    private RiskGroup(int minCount, int maxCount) {
         this.maxCount = maxCount;
+        this.minCount = minCount;
     }
 
     public int getMaxCount() {
         return maxCount;
+    }
+
+    public int getMinCount() {
+        return minCount;
     }
 
     public static RiskGroup identifyGroup(int count) {
