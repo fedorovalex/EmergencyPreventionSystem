@@ -7,6 +7,14 @@ public class SurveillanceSector {
 
     private SectorsCage[][] sector;
 
+    public SurveillanceSector(SectorParameters sectorParameters) {
+        this(
+                sectorParameters.getRowCount(),
+                sectorParameters.getColumnCount(),
+                sectorParameters.getFillFactor()
+        );
+    }
+
     public SurveillanceSector(int rowCount, int columnCount, double fillFactor) {
         if (rowCount < 1) {
             rowCount = 1;
@@ -14,8 +22,9 @@ public class SurveillanceSector {
         if (columnCount < 1) {
             columnCount = 1;
         }
-        //не лучле ли if?
-        fillFactor = Math.abs(fillFactor - (int)fillFactor);
+        if (fillFactor < 0 || fillFactor > 1) {
+            fillFactor = Math.abs(fillFactor - (int) fillFactor);
+        }
         sector = new SectorsCage[rowCount][columnCount];
 
         for (int rowNumber = 0; rowNumber < rowCount; rowNumber++) {

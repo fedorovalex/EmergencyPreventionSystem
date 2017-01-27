@@ -2,11 +2,11 @@ package surveillanceSector;
 
 import java.util.*;
 
-public class Observer {
+public class Inspector {
 
     private SurveillanceSector sector;
 
-    public Observer(SurveillanceSector sector) {
+    public Inspector(SurveillanceSector sector) {
 
         this.sector = sector;
     }
@@ -45,12 +45,13 @@ public class Observer {
 
         int peoplesCount = 0;
         Deque<SectorsCage> neighbors = new ArrayDeque<>();
+        firstCage.setChecked(true);
         neighbors.offer(firstCage);
         SectorsCage cage;
         while ((cage = neighbors.poll()) != null) {
             peoplesCount++;
-            cage.setChecked(true);
             for (SectorsCage cageNext: getNeighbors(cage)) {
+                cageNext.setChecked(true);
                 neighbors.offer(cageNext);
             }
         }
@@ -58,6 +59,7 @@ public class Observer {
     }
 
     private List<SectorsCage> getNeighbors(SectorsCage cage) {
+
         List<SectorsCage> neighbors = new ArrayList<>();
         neighbors.add(sector.getCage(cage.getRowNumber(), cage.getColumnNumber() - 1));
         neighbors.add(sector.getCage(cage.getRowNumber(), cage.getColumnNumber() + 1));

@@ -1,13 +1,12 @@
 import cmdLine.CmdLine;
 import cmdLine.exception.ParametersException;
-import surveillanceSector.Observer;
+import surveillanceSector.Inspector;
 import surveillanceSector.RiskGroup;
 import surveillanceSector.SectorParameters;
 import surveillanceSector.SurveillanceSector;
 import org.apache.commons.cli.ParseException;
 
 import java.util.Map;
-import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) {
@@ -17,17 +16,14 @@ public class Main {
 
         try {
             SectorParameters sectorParameters = cmdLine.parse(args);
-            sector = new SurveillanceSector(
-                    sectorParameters.getRowCount(),
-                    sectorParameters.getColumnCount(),
-                    sectorParameters.getFillFactor());
-            Observer observer = new Observer(sector);
+            sector = new SurveillanceSector(sectorParameters);
+            Inspector inspector = new Inspector(sector);
 
             String sectorSize = "Размер матрицы " + sectorParameters.getRowCount() +
                     " X " + sectorParameters.getColumnCount();
             String fillFactor = "Вероятность заполнения поля " + sectorParameters.getFillFactor();
             String riskGroup = collectRiskGroupToString();
-            String groupCountByRisk = collectGroupCountByRiskToString(observer.determineRiskGroups());
+            String groupCountByRisk = collectGroupCountByRiskToString(inspector.determineRiskGroups());
 
             System.out.println(sectorSize + "\n" + fillFactor + "\n" + riskGroup + "\n" + sector.collectToString()
             + "\n" + groupCountByRisk);
@@ -64,7 +60,7 @@ public class Main {
         return "Нужно указать параметры для системы предупреждения чрезвычайных ситуаций:\n" +
                 "-y 'Количество строк сектора' (целое число)\n" +
                 "-x 'Количество стобцов сектора' (целое число)\n" +
-                "-f 'вероятность заполнения ячейки сектора'\n" +
+                "-f 'вероятность заполнения ячейки сектора (от 0.0 до 1.0)'\n" +
                 "\nПример: '-y 9 -x 9 -f 0.3'.";
     }
 }

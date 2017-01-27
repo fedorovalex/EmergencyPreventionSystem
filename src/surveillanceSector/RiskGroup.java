@@ -26,7 +26,7 @@ public enum RiskGroup {
 
     public static RiskGroup identifyGroup(int count) {
         for (RiskGroup riskGroup: RiskGroup.values()) {
-            if (riskGroup.getMaxCount() >= count) {
+            if (count <= riskGroup.getMaxCount() && count >= riskGroup.getMinCount()) {
                 return riskGroup;
             }
         }
