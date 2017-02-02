@@ -40,16 +40,6 @@ public class Main {
         catch (Exception e) {
             System.out.println(getHelp());
         }
-
-        /*
-        SurveillanceSector sector = new SurveillanceSector(9, 9, mas);
-        Observer observer = new Observer(sector);
-
-        String riskGroup = collectRiskGroupToString();
-        String groupCountByRisk = collectGroupCountByRiskToString(observer.determineRiskGroups());
-
-        System.out.println(riskGroup + "\n" + sector.collectToString()
-                + "\n" + groupCountByRisk);*/
     }
 
     private static String collectRiskGroupToString() {
