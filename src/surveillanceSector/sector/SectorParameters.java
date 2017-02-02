@@ -1,4 +1,4 @@
-package surveillanceSector;
+package surveillanceSector.sector;
 
 public class SectorParameters {
 

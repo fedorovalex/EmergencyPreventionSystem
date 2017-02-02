@@ -1,9 +1,11 @@
 import cmdLine.CmdLine;
 import cmdLine.exception.ParametersException;
-import surveillanceSector.Inspector;
-import surveillanceSector.RiskGroup;
-import surveillanceSector.SectorParameters;
-import surveillanceSector.SurveillanceSector;
+import surveillanceSector.sector.ConverterSector;
+import surveillanceSector.sector.Creator;
+import surveillanceSector.supervision.Inspector;
+import surveillanceSector.supervision.RiskGroup;
+import surveillanceSector.sector.SectorParameters;
+import surveillanceSector.sector.Sector;
 import org.apache.commons.cli.ParseException;
 
 import java.util.Map;
@@ -12,11 +14,11 @@ public class Main {
     public static void main(String[] args) {
 
         CmdLine cmdLine = new CmdLine();
-        SurveillanceSector sector;
+        Sector sector;
 
         try {
             SectorParameters sectorParameters = cmdLine.parse(args);
-            sector = new SurveillanceSector(sectorParameters);
+            sector = Creator.createSector(sectorParameters);
             Inspector inspector = new Inspector(sector);
 
             String sectorSize = "Размер матрицы " + sectorParameters.getRowCount() +
@@ -25,8 +27,11 @@ public class Main {
             String riskGroup = collectRiskGroupToString();
             String groupCountByRisk = collectGroupCountByRiskToString(inspector.determineRiskGroups());
 
-            System.out.println(sectorSize + "\n" + fillFactor + "\n" + riskGroup + "\n" + sector.collectToString()
-            + "\n" + groupCountByRisk);
+            System.out.println(
+                    sectorSize + "\n"
+                    + fillFactor + "\n" + riskGroup + "\n"
+                    + ConverterSector.convertToString(sector)
+                    + "\n" + groupCountByRisk);
         }
         catch (ParseException | ParametersException e) {
             System.out.println(e.getMessage());
@@ -35,6 +40,16 @@ public class Main {
         catch (Exception e) {
             System.out.println(getHelp());
         }
+
+        /*
+        SurveillanceSector sector = new SurveillanceSector(9, 9, mas);
+        Observer observer = new Observer(sector);
+
+        String riskGroup = collectRiskGroupToString();
+        String groupCountByRisk = collectGroupCountByRiskToString(observer.determineRiskGroups());
+
+        System.out.println(riskGroup + "\n" + sector.collectToString()
+                + "\n" + groupCountByRisk);*/
     }
 
     private static String collectRiskGroupToString() {

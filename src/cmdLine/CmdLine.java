@@ -2,7 +2,7 @@ package cmdLine;
 
 import cmdLine.exception.ParametersException;
 import org.apache.commons.cli.*;
-import surveillanceSector.SectorParameters;
+import surveillanceSector.sector.SectorParameters;
 
 public class CmdLine {
 

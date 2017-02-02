@@ -1,4 +1,4 @@
-package surveillanceSector;
+package surveillanceSector.supervision;
 
 
 public enum RiskGroup {
@@ -30,6 +30,6 @@ public enum RiskGroup {
                 return riskGroup;
             }
         }
-        return null;
+        return NONE;
     }
 }
