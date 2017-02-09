@@ -1,10 +1,11 @@
-package surveillanceSector.sector;
+package surveillancesector.sector;
 
-import surveillanceSector.sector.sectorsCell.ConditionCell;
+import surveillancesector.sector.sectorsCell.ConditionCell;
+import surveillancesector.sector.sectorsCell.Coordinate;
 
 public class ConverterSector {
 
-    public static String convertToString(Sector sector) {
+    public String convertToString(Sector sector) {
 
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("\t ");
@@ -12,12 +13,12 @@ public class ConverterSector {
             stringBuilder.append(columnNumber);
             stringBuilder.append("\t ");
         }
-        for (int rowNumber = 0; rowNumber < sector.getRowCount(); rowNumber++) {
+        for (int y = 0; y < sector.getRowCount(); y++) {
             stringBuilder.append("\n");
-            stringBuilder.append(rowNumber + 1);
+            stringBuilder.append(y + 1);
             stringBuilder.append("\t");
-            for (int columnNumber = 0; columnNumber < sector.getColumnCount(); columnNumber++) {
-                if (sector.getCell(rowNumber, columnNumber).getCondition() == ConditionCell.BUSY) {
+            for (int x = 0; x < sector.getColumnCount(); x++) {
+                if (sector.getCell(new Coordinate(x, y)) == ConditionCell.BUSY) {
                     stringBuilder.append("|X|\t");
                 } else {
                     stringBuilder.append(" - \t");

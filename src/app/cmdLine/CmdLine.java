@@ -1,12 +1,12 @@
-package cmdLine;
+package app.cmdLine;
 
-import cmdLine.exception.ParametersException;
+import app.cmdLine.exception.ParametersException;
 import org.apache.commons.cli.*;
-import surveillanceSector.sector.SectorParameters;
+import app.InputParameters;
 
 public class CmdLine {
 
-    public SectorParameters parse(String[] args) throws ParseException, ParametersException {
+    public InputParameters parse(String[] args) throws ParseException, ParametersException {
 
         CommandLineParser cmdLinePosixParser = new PosixParser();
         CommandLine commandLine = cmdLinePosixParser.parse(setOptions(), args);
@@ -25,7 +25,7 @@ public class CmdLine {
         int columnCount = Integer.parseInt(commandLine.getOptionValue("x"));
         double fillFactor = Double.parseDouble(commandLine.getOptionValue("f"));
 
-        return new SectorParameters(rowCount, columnCount, fillFactor);
+        return new InputParameters(rowCount, columnCount, fillFactor);
     }
 
     private Options setOptions() {
@@ -43,5 +43,13 @@ public class CmdLine {
         posixOptions.addOption(optionFillFactor);
 
         return posixOptions;
+    }
+
+    public String getHelp() {
+        return "Нужно указать параметры для системы предупреждения чрезвычайных ситуаций:\n" +
+                "-y 'Количество строк сектора' (целое число)\n" +
+                "-x 'Количество стобцов сектора' (целое число)\n" +
+                "-f 'вероятность заполнения ячейки сектора (от 0.0 до 1.0)'\n" +
+                "\nПример: '-y 9 -x 9 -f 0.3'.";
     }
 }

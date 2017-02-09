@@ -1,4 +1,4 @@
-package surveillanceSector.supervision;
+package surveillancesector.supervision;
 
 
 public enum RiskGroup {

@@ -1,12 +1,12 @@
-package surveillanceSector.sector;
+package app;
 
-public class SectorParameters {
+public class InputParameters {
 
     private final int rowCount;
     private final int columnCount;
     private final double fillFactor;
 
-    public SectorParameters(int rowCount, int columnCount, double fillFactor) {
+    public InputParameters(int rowCount, int columnCount, double fillFactor) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.fillFactor = fillFactor;

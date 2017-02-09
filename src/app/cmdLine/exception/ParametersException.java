@@ -1,4 +1,4 @@
-package cmdLine.exception;
+package app.cmdLine.exception;
 
 public class ParametersException extends Exception {
     public ParametersException() {
