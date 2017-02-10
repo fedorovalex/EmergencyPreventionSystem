@@ -16,7 +16,9 @@ public class InspectorTest {
     @Test
     public void determineRiskGroupsTest() throws Exception {
 
-        Sector sector = CreatorWithFillingOfString.create('x',
+        char symbolFilling = 'x';
+
+        Sector sector = new CreatorWithFillingOfString().create(symbolFilling,
                         " x x xxx    \n"+
                         " x   xxx  x \n"+
                         "  x  xxx  x \n"+
@@ -37,7 +39,7 @@ public class InspectorTest {
     @Test
     public void determineRiskGroupsTestByFreeAll() throws Exception {
 
-        Sector sector = CreatorWithFillingOfString.create('x',
+        Sector sector = new CreatorWithFillingOfString().create('x',
                         "            \n"+
                         "            \n"+
                         "            \n"+
@@ -59,7 +61,7 @@ public class InspectorTest {
     @Test
     public void determineRiskGroupsTestByBoundaries() throws Exception {
 
-        Sector sector = CreatorWithFillingOfString.create('x',
+        Sector sector = new CreatorWithFillingOfString().create('x',
                         "xxxxxxxxxxxx\n"+
                         "x          x\n"+
                         "x          x\n"+
@@ -72,6 +74,28 @@ public class InspectorTest {
         Map<RiskGroup, Long> result = new Inspector(sector).determineRiskGroups();
 
         assertEquals(result.get(NONE), new Long(1L));
+        assertEquals(result.get(MINOR), new Long(0L));
+        assertEquals(result.get(NORMAL), new Long(0L));
+        assertEquals(result.get(MAJOR), new Long(0L));
+        assertEquals(result.get(CRITICAL), new Long(1L));
+    }
+
+    @Test
+    public void determineRiskGroupsTestByAllFilled() throws Exception {
+
+        Sector sector = new CreatorWithFillingOfString().create('x',
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx\n"+
+                        "xxxxxxxxxxxx");
+
+        Map<RiskGroup, Long> result = new Inspector(sector).determineRiskGroups();
+
+        assertEquals(result.get(NONE), new Long(0L));
         assertEquals(result.get(MINOR), new Long(0L));
         assertEquals(result.get(NORMAL), new Long(0L));
         assertEquals(result.get(MAJOR), new Long(0L));

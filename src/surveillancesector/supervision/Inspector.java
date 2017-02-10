@@ -13,7 +13,7 @@ import static surveillancesector.sector.sectorsCell.ConditionCell.*;
 public class Inspector {
 
     private Sector sector;
-    private SectorAuditLog auditLog;
+    private AccountingVisitSector accountingVisitSector;
 
     public Inspector(Sector sector) {
 
@@ -22,8 +22,7 @@ public class Inspector {
 
     public Map<RiskGroup, Long> determineRiskGroups() {
 
-        auditLog = new SectorAuditLog(sector.getRowCount(), sector.getColumnCount());
-        //List<Integer> sizeGroups = calculateSizeGroups();
+        accountingVisitSector = new AccountingVisitSector(sector.getRowCount(), sector.getColumnCount());
 
         Map<RiskGroup, Long> groupsCountByRisk = calculateSizeGroups().stream()
                 .collect(
@@ -32,17 +31,6 @@ public class Inspector {
                         )
                 );
 
-        /*Map<RiskGroup, Integer> groupsCountByRisk = new HashMap<>();
-        for (RiskGroup riskGroup: RiskGroup.values()) {
-            groupsCountByRisk.put(riskGroup, 0);
-        }
-
-
-        for (Integer count: personsCountInGroups) {
-            RiskGroup riskGroup = RiskGroup.identifyGroup(count);
-            int oldValue = groupsCountByRisk.get(riskGroup);
-            groupsCountByRisk.put(riskGroup, ++oldValue);
-        }*/
         Arrays.stream(RiskGroup.values())
                 .filter(riskGroup -> !groupsCountByRisk.containsKey(riskGroup))
                 .forEach(riskGroup -> groupsCountByRisk.put(riskGroup, 0L));
@@ -55,7 +43,7 @@ public class Inspector {
         for (int y = 0; y < sector.getRowCount(); y++) {
             for (int x = 0; x < sector.getColumnCount(); x++) {
                 ConditionCell cell = sector.getCell(coo(x, y));
-                if (!auditLog.isVisited(coo(x, y)) && cell == BUSY) {
+                if (cell == BUSY && !accountingVisitSector.isVisited(coo(x, y))) {
                     sizeGroups.add(calculateNeighborsCount(coo(x, y)));
                 }
             }
@@ -67,18 +55,16 @@ public class Inspector {
 
         int peoplesCount = 0;
         Deque<Coordinate> neighbors = new ArrayDeque<>();
-        auditLog.toVisit(first);
+        accountingVisitSector.toVisit(first);
         neighbors.offer(first);
         Coordinate coordinate;
         while ((coordinate = neighbors.poll()) != null) {
             peoplesCount++;
 
             getNeighbors(coordinate)
-                    .filter(neighbor -> !auditLog.isVisited(neighbor))
-                    .forEach(neighbor -> {
-                        auditLog.toVisit(neighbor);
-                        neighbors.offer(neighbor);
-                    });
+                    .filter(neighbor -> !accountingVisitSector.isVisited(neighbor))
+                    .peek(accountingVisitSector::toVisit)
+                    .forEach(neighbors::offer);
         }
         return peoplesCount;
     }

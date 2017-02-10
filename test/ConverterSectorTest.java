@@ -3,7 +3,6 @@ import org.junit.Test;
 import surveillancesector.sector.ConverterSector;
 import surveillancesector.sector.creators.CreatorWithFillingOfString;
 import surveillancesector.sector.Sector;
-import surveillancesector.sector.sectorsCell.ConditionCell;
 
 import static org.junit.Assert.*;
 
@@ -11,7 +10,9 @@ public class ConverterSectorTest {
     @Test
     public void convertToStringTest() throws Exception {
 
-        Sector sector = CreatorWithFillingOfString.create('X',
+        char symbolFilling = 'X';
+
+        Sector sector = new CreatorWithFillingOfString().create(symbolFilling,
                         "X X XX\n" +
                         " XX XX\n" +
                         "X  X X\n" +

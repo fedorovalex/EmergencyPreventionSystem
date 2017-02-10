@@ -3,7 +3,6 @@ package app;
 import app.cmdLine.CmdLine;
 import app.cmdLine.exception.ParametersException;
 import app.reporter.Reporter;
-import surveillancesector.sector.ConverterSector;
 import surveillancesector.sector.creators.CreatorWithRandomFilling;
 import surveillancesector.supervision.Inspector;
 import surveillancesector.supervision.RiskGroup;

@@ -2,11 +2,11 @@ package surveillancesector.supervision;
 
 import surveillancesector.sector.sectorsCell.Coordinate;
 
-public class SectorAuditLog {
+public class AccountingVisitSector {
 
     private boolean[][] accountingVisitedCells;
 
-    public SectorAuditLog(int rowCount, int columnCount) {
+    public AccountingVisitSector(int rowCount, int columnCount) {
 
         accountingVisitedCells = new boolean[rowCount][columnCount];
     }

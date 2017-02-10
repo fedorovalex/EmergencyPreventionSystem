@@ -7,7 +7,7 @@ import surveillancesector.sector.sectorsCell.Coordinate;
 
 public class CreatorWithFillingOfString {
 
-    public static Sector create(char symbolFilling, String str) {
+    public Sector create(char symbolFilling, String str) {
 
         assert str != null;
         String[] rows = str.split("\\n");
